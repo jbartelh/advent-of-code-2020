@@ -2,7 +2,8 @@
   (:require [clojure.java.io :as io]
             [aoc.d1.expense-report :as day1]))
 
-(def exercises {:1 #'day1/find-two-entries})
+(def exercises {:1 #'day1/find-two-entries
+                :1b #'day1/find-three-entries})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
@@ -22,7 +23,7 @@
   ([day]
    (str "No exercise found for '" day "', try one of:\n"
         available-exercises-as-str)))
-#_ ((:1 exercises))
+#_ ((:1b exercises))
 
 (defn -main
   [& [day & _]]
