@@ -33,3 +33,7 @@
   "Part two: In your expense report, what is the product of the three entries that sum to 2020?"
   []
   (expense-report input 3))
+
+#_(let [input [1721 979 366 299 675 1456]]
+  (expense-report input 2))
+;=> 514579
