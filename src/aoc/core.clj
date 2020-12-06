@@ -1,9 +1,11 @@
 (ns aoc.core
   (:require [clojure.java.io :as io]
-            [aoc.d1.expense-report :as day1]))
+            [aoc.d1.expense-report :as day1]
+            [aoc.d2.password-philosophy :as day2]))
 
 (def exercises {:1 #'day1/find-two-entries
-                :1b #'day1/find-three-entries})
+                :1b #'day1/find-three-entries
+                :2 #'day2/count-invalid-pws})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
