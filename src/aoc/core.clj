@@ -10,7 +10,8 @@
                 :2b #'day2/invalid-pws-by-pos
                 :3 #'day3/part-one
                 :3b #'day3/part-two-multiple-slopes
-                :4 #'day4/count-invalid-passports})
+                :4 #'day4/count-invalid-passports
+                :4b #'day4/passports-with-valid-fields})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
