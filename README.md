@@ -17,6 +17,8 @@ Please specify a day/exercise to execute, the following are available:
 1b      'find-three-entries':   Part two: In your expense report, what is the product of the three entries that sum to 2020?
 2       'count-invalid-pws':    How many passwords are valid according to their policies?
 2b      'invalid-pws-by-pos':   Part-two: How many passwords are valid according to position-based-policies?
+3       'part-one':     Starting at the top-left corner of your map and following a slope of right 3 and down 1, how many trees would you encounter?
+3b      'part-two-multiple-slopes':     What do you get if you multiply together the number of trees encountered on each of the listed slopes?
 
 clj -A:run 1
 964875

@@ -7,7 +7,8 @@
                 :1b #'day1/find-three-entries
                 :2 #'day2/count-invalid-pws
                 :2b #'day2/invalid-pws-by-pos
-                :3 #'day3/part-one})
+                :3 #'day3/part-one
+                :3b #'day3/part-two-multiple-slopes})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)

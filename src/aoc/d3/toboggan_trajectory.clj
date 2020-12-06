@@ -55,6 +55,22 @@
                                               :down  0}})]
     (number-of-trees input flight)))
 
+(defn part-two-multiple-slopes
+  "What do you get if you multiply together the number of trees encountered on each of the listed slopes?"
+  []
+  (let [flight-map-sizes (get-flight-map-sizes input)
+        flight (merge flight-map-sizes {:start     {:right 0
+                                                    :down  0}})
+        directions [{:direction {:right 1 :down  1}}
+                    {:direction {:right 3 :down  1}}
+                    {:direction {:right 5 :down  1}}
+                    {:direction {:right 7 :down  1}}
+                    {:direction {:right 1 :down  2}}]]
+    (->> directions
+         (map (partial merge flight))
+         (map (partial number-of-trees input))
+         (reduce *))))
+
 
 ;; repl-examples
 #_(get-board-sizes input)
