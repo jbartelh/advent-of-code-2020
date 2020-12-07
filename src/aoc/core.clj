@@ -3,7 +3,8 @@
             [aoc.d2.password-philosophy :as day2]
             [aoc.d3.toboggan-trajectory :as day3]
             [aoc.d4.password-processing :as day4]
-            [aoc.d5.binary-boarding :as day5]))
+            [aoc.d5.binary-boarding :as day5]
+            [aoc.d6.custom-customs :as day6]))
 
 (def exercises {:1 #'day1/find-two-entries
                 :1b #'day1/find-three-entries
@@ -14,7 +15,8 @@
                 :4 #'day4/count-invalid-passports
                 :4b #'day4/passports-with-valid-fields
                 :5 #'day5/highest-seat
-                :5b #'day5/missing-seat})
+                :5b #'day5/missing-seat
+                :6 #'day6/sum-of-group-answers})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
