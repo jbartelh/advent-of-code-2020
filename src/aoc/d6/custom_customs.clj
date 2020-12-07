@@ -1,7 +1,7 @@
 (ns aoc.d6.custom-customs
   (:require [clojure.spec.alpha :as s]
             [clojure.string :as str]
-            [clojure.set :refer [union]]))
+            [clojure.set :refer [union intersection]]))
 
 (def input (slurp (clojure.java.io/reader "src/aoc/d6/input.txt")))
 
@@ -23,13 +23,23 @@
                           (s/conformer #(str/split % #"\n\n"))
                           (s/* ::group)))
 
-(defn sum-of-group-answers
+(defn group-answers-xf [set-op] (comp
+                                  (map set-op)
+                                  (map count)))
+
+(defn sum-of-anyone-yes
   "For each group, count the number of questions to which anyone answered \"yes\". What is the sum of those counts?"
   []
   (let [answers (s/conform ::answers input)]
-    (->> (map #(apply union %) answers)
-         (map count)
-         (reduce +))))
+    (transduce (group-answers-xf #(apply union %)) + answers)))
+
+
+(defn sum-of-everyone-yes
+  "For each group, count the number of questions to which everyone answered \"yes\". What is the sum of those counts?"
+  []
+  (let [answers (s/conform ::answers input)]
+    (transduce (group-answers-xf #(apply intersection %)) + answers)))
+
 
 ;; repl-example
 #_(s/conform ::answers input)

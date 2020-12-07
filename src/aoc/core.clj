@@ -16,7 +16,8 @@
                 :4b #'day4/passports-with-valid-fields
                 :5 #'day5/highest-seat
                 :5b #'day5/missing-seat
-                :6 #'day6/sum-of-group-answers})
+                :6 #'day6/sum-of-anyone-yes
+                :6b #'day6/sum-of-everyone-yes})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)

@@ -23,6 +23,8 @@ Please specify a day/exercise to execute, the following are available:
 4b  passports-with-valid-fields   Count the number of valid passports - those that have all required fields and valid values. Continue to treat cid as optional. In your batch file, how many passports are valid?
 5   highest-seat                  As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?
 5b  missing-seat                  What is the ID of your seat?
+6   sum-of-anyone-yes             For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
+6b  sum-of-everyone-yes           For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
 
 clj -A:run 1
 964875
