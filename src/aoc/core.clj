@@ -13,13 +13,14 @@
                 :3b #'day3/part-two-multiple-slopes
                 :4 #'day4/count-invalid-passports
                 :4b #'day4/passports-with-valid-fields
-                :5 #'day5/highest-seat})
+                :5 #'day5/highest-seat
+                :5b #'day5/missing-seat})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
         fn-name (:name (meta exercise-fn))
         fn-doc (:doc (meta exercise-fn))]
-    (format "%s\t'%s':\t%s\n" arg-str fn-name fn-doc)))
+    (format "%-4s%-30s%s%n" arg-str fn-name fn-doc)))
 
 (def available-exercises-as-str
   (->> exercises

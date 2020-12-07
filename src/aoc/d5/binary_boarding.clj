@@ -1,6 +1,5 @@
 (ns aoc.d5.binary-boarding
-  (:require [clojure.string :as str]
-            [clojure.math.numeric-tower :as m]))
+  (:require [clojure.set :refer [difference]]))
 
 (def input (into [] (line-seq (clojure.java.io/reader "src/aoc/d5/input.txt"))))
 
@@ -27,16 +26,28 @@
         column (get-column columns col-code)]
     (+ (* 8 row) column)))
 
-(defn highest-seat
-  "As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?"
-  []
+(defn code-list->sorted-seats [code-list]
   (let [rows (into [] (range 128))
         columns (into [] (range 8))
         code->seat (partial get-seat rows columns)]
-    (->> (map code->seat input)
-         (sort)
-         (reverse)
-         (first))))
+    (->> (map code->seat code-list)
+         (sort))))
+
+(defn highest-seat
+  "As a sanity check, look through your list of boarding passes. What is the highest seat ID on a boarding pass?"
+  []
+  (->> (code-list->sorted-seats input)
+       (reverse)
+       (first)))
+
+(defn missing-seat
+  "What is the ID of your seat?"
+  []
+  (let [found-seats (code-list->sorted-seats input)
+        first-seat (first found-seats)
+        last-seat (first (reverse found-seats))
+        all-seats (set (range first-seat (inc last-seat)))]
+    (first (difference all-seats found-seats))))
 
 ;; repl-examples:
 (comment
