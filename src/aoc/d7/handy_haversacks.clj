@@ -40,3 +40,13 @@
     (filter #(contains-shiny-gold? (second %) parsed :shiny-gold) parsed)
     (count)))
 
+(defn number-of-bags [res rules]
+  (if (empty? res)
+    0
+    (reduce + (map (fn [[color qty]]
+                     (+ qty (* qty (number-of-bags (color rules) rules)))) res))))
+
+(defn bags-inside-shiny-gold
+  "How many individual bags are required inside your single shiny gold bag?"
+  []
+  (number-of-bags (:shiny-gold parsed) parsed))

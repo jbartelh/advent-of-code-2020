@@ -19,7 +19,8 @@
                 :5b #'day5/missing-seat
                 :6 #'day6/sum-of-anyone-yes
                 :6b #'day6/sum-of-everyone-yes
-                :7 #'day7/bags-containing-shiny-gold})
+                :7 #'day7/bags-containing-shiny-gold
+                :7b #'day7/bags-inside-shiny-gold})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
