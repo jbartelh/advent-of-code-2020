@@ -5,7 +5,8 @@
             [aoc.d4.password-processing :as day4]
             [aoc.d5.binary-boarding :as day5]
             [aoc.d6.custom-customs :as day6]
-            [aoc.d7.handy-haversacks :as day7]))
+            [aoc.d7.handy-haversacks :as day7]
+            [aoc.d8.handheld-halting :as day8]))
 
 (def exercises {:1 #'day1/find-two-entries
                 :1b #'day1/find-three-entries
@@ -20,7 +21,8 @@
                 :6 #'day6/sum-of-anyone-yes
                 :6b #'day6/sum-of-everyone-yes
                 :7 #'day7/bags-containing-shiny-gold
-                :7b #'day7/bags-inside-shiny-gold})
+                :7b #'day7/bags-inside-shiny-gold
+                :8 #'day8/accumulators-value})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
