@@ -15,7 +15,7 @@
 (s/def ::op (s/and string?
                    (s/conformer #(str/split % #" "))
                    (s/cat :op-code (s/and #{"jmp" "acc" "nop"}
-                                           (s/conformer keyword))
+                                          (s/conformer keyword))
                           :arg (s/conformer str->int?))))
 
 (s/def ::program (s/* ::op))
@@ -40,6 +40,23 @@
 (defmethod execute :nop [_ ctx]
   (update ctx :line inc))
 
+;; part-two
+(defn lazy-changes
+  "Returns a lazy sequence of possible bugfix changes in form of [line changed-op].
+  A possible change are :nop changed to :jmp and vice versa."
+  [program]
+  (keep-indexed (fn [idx {code :op-code :as op}]
+                  (when (or (= code :nop) (= code :jmp))
+                    (let [changed-op-code (code {:nop :jmp
+                                                 :jmp :nop})]
+                      [idx (assoc op :op-code changed-op-code)])))
+                program))
+;; part-two
+(defn lazy-changed-programs
+  [program]
+  (->> (lazy-changes program)
+       (map (fn [[line changed-op]] (assoc program line changed-op)))))
+
 (defn run
   "Runs the given program.
   It executes the first operation in an initial context, to derive a new context.
@@ -51,10 +68,13 @@
          op (first program)
          call-set #{}]
     (let [call {(:line ctx) op}]
-      (if (contains? call-set call)
+      (cond
+        (contains? call-set call)
         {:op op :ctx ctx :call-set call-set}
-        (let [next-ctx (execute op ctx)
-              next-op (program (:line next-ctx))
+        (= op :end)
+        {:op op :ctx ctx :call-set call-set :terminated true}
+        :else (let [next-ctx (execute op ctx)
+              next-op (get program (:line next-ctx) :end)
               next-call-set (conj call-set call)]
           (recur next-ctx next-op next-call-set))))))
 
@@ -64,6 +84,17 @@
   (let [program (s/conform ::program input)
         return (run program)]
     (get-in return [:ctx :accumulator])))
+
+(defn accumulator-after-fix
+  "Fix the program so that it terminates normally by changing exactly one jmp (to nop) or nop (to jmp). What is the value of the accumulator after the program terminates?"
+  []
+  (let [program (s/conform ::program input)
+        program-variations (lazy-changed-programs program)]
+    (->> (map #(run %) program-variations)
+         (filter :terminated)
+         (first)
+         (:ctx)
+         (:accumulator))))
 
 (comment
   ;; exec single op

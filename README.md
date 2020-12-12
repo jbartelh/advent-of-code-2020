@@ -25,6 +25,10 @@ Please specify a day/exercise to execute, the following are available:
 5b  missing-seat                  What is the ID of your seat?
 6   sum-of-anyone-yes             For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
 6b  sum-of-everyone-yes           For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
+7   bags-containing-shiny-gold    How many bag colors can eventually contain at least one shiny gold bag? 
+7b  bags-inside-shiny-gold        How many individual bags are required inside your single shiny gold bag?
+8   accumulators-value            Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
+8b  accumulator-after-fix         Fix the program so that it terminates normally by changing exactly one jmp (to nop) or nop (to jmp). What is the value of the accumulator after the program terminates?
 
 clj -A:run 1
 964875
