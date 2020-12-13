@@ -29,6 +29,8 @@ Please specify a day/exercise to execute, the following are available:
 7b  bags-inside-shiny-gold        How many individual bags are required inside your single shiny gold bag?
 8   accumulators-value            Run your copy of the boot code. Immediately before any instruction is executed a second time, what value is in the accumulator?
 8b  accumulator-after-fix         Fix the program so that it terminates normally by changing exactly one jmp (to nop) or nop (to jmp). What is the value of the accumulator after the program terminates?
+9   find-weakness                 Find the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it. What is the first number that does not have this property?
+9b  find-contiguous-set           What is the encryption weakness in your XMAS-encrypted list of numbers?
 
 clj -A:run 1
 964875

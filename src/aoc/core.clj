@@ -25,7 +25,8 @@
                 :7b #'day7/bags-inside-shiny-gold
                 :8 #'day8/accumulators-value
                 :8b #'day8/accumulator-after-fix
-                :9 #'day9/find-weakness})
+                :9 #'day9/find-weakness
+                :9b #'day9/find-contiguous-set})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
