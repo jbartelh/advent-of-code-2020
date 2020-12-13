@@ -7,7 +7,8 @@
             [aoc.d6.custom-customs :as day6]
             [aoc.d7.handy-haversacks :as day7]
             [aoc.d8.handheld-halting :as day8]
-            [aoc.d9.encoding-error :as day9]))
+            [aoc.d9.encoding-error :as day9]
+            [aoc.d10.adapter-array :as day10]))
 
 (def exercises {:1 #'day1/find-two-entries
                 :1b #'day1/find-three-entries
@@ -26,7 +27,8 @@
                 :8 #'day8/accumulators-value
                 :8b #'day8/accumulator-after-fix
                 :9 #'day9/find-weakness
-                :9b #'day9/find-contiguous-set})
+                :9b #'day9/find-contiguous-set
+                :10 #'day10/jolt-deltas})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
