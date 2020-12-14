@@ -28,7 +28,8 @@
                 :8b #'day8/accumulator-after-fix
                 :9 #'day9/find-weakness
                 :9b #'day9/find-contiguous-set
-                :10 #'day10/jolt-deltas})
+                :10 #'day10/jolt-deltas
+                :10b #'day10/all-distinct-combinations})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
