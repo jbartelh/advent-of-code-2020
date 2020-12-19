@@ -31,7 +31,8 @@
                 :9b #'day9/find-contiguous-set
                 :10 #'day10/jolt-deltas
                 :10b #'day10/all-distinct-combinations
-                :11 #'day11/number-of-occupied-seats})
+                :11 #'day11/number-of-occupied-seats
+                :11b #'day11/number-of-occupied-new-visibility})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
