@@ -8,7 +8,8 @@
             [aoc.d7.handy-haversacks :as day7]
             [aoc.d8.handheld-halting :as day8]
             [aoc.d9.encoding-error :as day9]
-            [aoc.d10.adapter-array :as day10]))
+            [aoc.d10.adapter-array :as day10]
+            [aoc.d11.seating-system :as day11]))
 
 (def exercises {:1 #'day1/find-two-entries
                 :1b #'day1/find-three-entries
@@ -29,7 +30,8 @@
                 :9 #'day9/find-weakness
                 :9b #'day9/find-contiguous-set
                 :10 #'day10/jolt-deltas
-                :10b #'day10/all-distinct-combinations})
+                :10b #'day10/all-distinct-combinations
+                :11 #'day11/number-of-occupied-seats})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
