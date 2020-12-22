@@ -37,7 +37,8 @@
                 :11b #'day11/number-of-occupied-new-visibility
                 :12 #'day12/fix-nav
                 :12b #'day12/waypoint-based-nav
-                :13 #'day13/get-next-shuttle})
+                :13 #'day13/get-next-shuttle
+                :13b #'day13/shuttle-company-contest})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)
