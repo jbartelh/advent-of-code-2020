@@ -11,7 +11,8 @@
             [aoc.d10.adapter-array :as day10]
             [aoc.d11.seating-system :as day11]
             [aoc.d12.rain-risk :as day12]
-            [aoc.d13.shuttle-search :as day13]))
+            [aoc.d13.shuttle-search :as day13]
+            [aoc.d14.docking-data :as day14]))
 
 (def exercises {:1 #'day1/find-two-entries
                 :1b #'day1/find-three-entries
@@ -38,7 +39,9 @@
                 :12 #'day12/fix-nav
                 :12b #'day12/waypoint-based-nav
                 :13 #'day13/get-next-shuttle
-                :13b #'day13/shuttle-company-contest})
+                :13b #'day13/shuttle-company-contest
+                :14 #'day14/exec-init-and-calc-mem
+                :14b #'day14/exec-emulator-v2})
 
 (defn exercise->str [[k exercise-fn]]
   (let [arg-str (name k)

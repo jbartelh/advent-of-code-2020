@@ -1,6 +1,7 @@
 (ns aoc.d14.docking-data
   (:require [clojure.spec.alpha :as s]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [clojure.math.combinatorics :refer [cartesian-product]]))
 
 #_(def input '("mask = XXXXXXXXXXXXXXXXXXXXXXXXXXXXX1XXXX0X"
               "mem[8] = 11"
@@ -29,34 +30,90 @@
 
 (def init-code (s/conform ::init-code input))
 
-(defn mask->fn [mask]
+(defn apply-bit-mask [val [pos bit-mask]]
+  (case bit-mask
+    \0 (bit-clear val pos)
+    \1 (bit-set val pos)))
+
+(defn value-mask->fn [mask]
   (let [bits-to-change (->> (keep-indexed (fn [idx val] (when (#{\1 \0} val) [idx val])) mask)
                             (map (fn [[idx val]] [(- (count mask) idx 1) val])))]
-    (fn [val] (reduce
-                (fn [val [pos bit-mask]]
-                  (case bit-mask
-                    \0 (bit-clear val pos)
-                    \1 (bit-set val pos)))
-                val
-                bits-to-change))))
+    (fn [value] (reduce apply-bit-mask value bits-to-change))))
 
-  (defmulti exec (fn [[code _] _] code))
+;; part two
+(defn mask-op? [op]
+  (fn [[_ change-op]] (= op change-op)) )
 
-(defmethod exec :mem [[_ {:keys [address value]}] ctx]
-  (assoc-in ctx [:mem address] ((:mask-fn ctx) value)))
+;; part two
+(defn set-ones [masked-ones address]
+  (reduce
+    (fn [add [pos _]](bit-set add pos))
+    address
+    masked-ones))
 
-(defmethod exec :mask [[_ mask] ctx]
-  (assoc ctx :mask-fn (mask->fn mask)))
+;; part two
+(defn x->01 [[pos _]]
+  [[pos \1] [pos \0]])
+
+;; part two
+(defn x->addresses [x-ops address]
+  (let [bit-ops (apply cartesian-product (map x->01 x-ops))]
+    (reduce (fn [addresses bit-mask-ops]
+              (conj addresses (reduce apply-bit-mask address bit-mask-ops)))
+            #{}
+            bit-ops)))
+
+;; part two
+(defn address-mask->fn [mask]
+  (let [bits-to-change (->> (keep-indexed (fn [idx val] (when (#{\1 \X} val) [idx val])) mask)
+                            (map (fn [[idx val]] [(- (count mask) idx 1) val])))
+        ops-1 (filter (mask-op? \1) bits-to-change)
+        ops-x (filter (mask-op? \X) bits-to-change)]
+    (fn [address value]
+      (->> address
+           (set-ones ops-1)
+           (x->addresses ops-x)
+           (reduce (fn [mem address] (assoc mem address value)) {})))))
+
+(defmulti exec (fn [version ctx [op-code args]] [version op-code]))
+
+(defmethod exec [:v1 :mem] [_ ctx [_ {:keys [address value]}]]
+  (assoc-in ctx [:memory address] ((:mask-fn ctx) value)))
+
+(defmethod exec [:v1 :mask] [_ ctx [_ mask]]
+  (assoc ctx :mask-fn (value-mask->fn mask)))
+
+;; part two
+(defmethod exec [:v2 :mem] [_ ctx [_ {:keys [address value]}]]
+  (update ctx :memory #(merge % ((:mask-fn ctx) address value))))
+
+;; part two
+(defmethod exec [:v2 :mask] [_ ctx [_ mask]]
+  (assoc ctx :mask-fn (address-mask->fn mask)))
+
+(defn exec-emulator [version]
+  (->> (reduce (partial exec version) {} init-code)
+       (:memory)
+       (vals)
+       (reduce +)))
 
 (defn exec-init-and-calc-mem
   "Execute the initialization program. What is the sum of all values left in memory after it completes?"
   []
-  (->> (loop [ctx {:mem {}}
-              [first & rest] init-code]
-         (if-not first
-           ctx
-           (recur (exec first ctx) rest)))
-       (:mem)
-       (vals)
-       (reduce +)))
+  (exec-emulator :v1))
 
+(defn exec-emulator-v2
+  "Execute the initialization program using an emulator for a version 2 decoder chip. What is the sum of all values left in memory after it completes?"
+  []
+  (exec-emulator :v2))
+
+(comment
+  (def demo-input-2 (s/conform ::init-code '("mask = 000000000000000000000000000000X1001X"
+                                              "mem[42] = 100"
+                                              "mask = 00000000000000000000000000000000X0XX"
+                                              "mem[26] = 1")))
+  (addr-mask->fn "000000000000000000000000000000X1001X")
+
+  (x->addresses '([5 \X] [0 \X]) 58)
+  ((address-mask->fn "000000000000000000000000000000X1001X") 42 100)
+  )
